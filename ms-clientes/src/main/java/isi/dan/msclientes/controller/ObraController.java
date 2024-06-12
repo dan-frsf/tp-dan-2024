@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import isi.dan.msclientes.aop.LogExecutionTime;
 import isi.dan.msclientes.model.Obra;
 import isi.dan.msclientes.servicios.ObraService;
 
@@ -18,11 +19,13 @@ public class ObraController {
     private ObraService obraService;
 
     @GetMapping
+    @LogExecutionTime
     public List<Obra> getAll() {
         return obraService.findAll();
     }
 
     @GetMapping("/{id}")
+    @LogExecutionTime
     public ResponseEntity<Obra> getById(@PathVariable Integer id) {
         Optional<Obra> obra = obraService.findById(id);
         return obra.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());

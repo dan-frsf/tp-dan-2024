@@ -30,9 +30,8 @@ services:
     networks:
       - productos-net
 
-  ms-productos-svc:
+  ms-productos-svc-1:
     image: ms-productos-svc:latest
-    container_name: ms-productos-svc
     build:
       context: .
       dockerfile: Dockerfile
@@ -44,6 +43,8 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
+      SPRING_EUREKA_DEFAULT_ZONE: http://ms-eureka-svc:8761/eureka/
+      SPRING_INSTANCIA: ms-productos-svc-1
     ports:
       - "6180:8080"
     depends_on:
